@@ -1,0 +1,224 @@
+@startuml Diagramme_Classes_Musee
+
+title Système de Gestion de Musée - Diagramme de Classes
+
+' Configuration
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor<<Entity>> LightYellow
+    BackgroundColor<<ValueObject>> LightBlue
+    BackgroundColor<<Enum>> LightGreen
+}
+
+' ====== CLASSES PRINCIPALES ======
+
+class Visiteur <<Entity>> {
+  - id : String
+  - nom : String
+  - email : String
+  - telephone : String
+  - typeVisiteur : TypeVisiteur
+  - dateInscription : Date
+  --
+  + peutReserver() : Boolean
+  + getHistoriqueVisites() : List<Visite>
+}
+
+class Oeuvre <<Entity>> {
+  - id : String
+  - titre : String
+  - artiste : String
+  - annee : Integer
+  - technique : String
+  - dimensions : String
+  - description : Text
+  - style : StyleArtistique
+  --
+  + estExposee() : Boolean
+  + getExposition() : Exposition
+}
+
+class Exposition <<Entity>> {
+  - id : Integer
+  - titre : String
+  - description : Text
+  - dateDebut : Date
+  - dateFin : Date
+  - type : TypeExposition
+  - capaciteMax : Integer
+  --
+  + estActive() : Boolean
+  + getNombreVisiteurs() : Integer
+  + ajouterOeuvre(oeuvre : Oeuvre) : void
+}
+
+class Billet <<Entity>> {
+  - id : Integer
+  - type : TypeBillet
+  - prix : Double
+  - dateValidite : Date
+  - qrCode : String
+  - statut : StatutBillet
+  --
+  + estValide() : Boolean
+  + utiliser() : void
+  + calculerPrix() : Double
+}
+
+class Reservation <<Entity>> {
+  - id : Integer
+  - numeroConfirmation : String
+  - dateReservation : Date
+  - dateVisite : Date
+  - creneauHoraire : String
+  - statut : StatutReservation
+  --
+  + confirmer() : void
+  + annuler() : void
+  + générerQRCode() : String
+  + estValide() : Boolean
+}
+
+class VisiteGuidee <<Entity>> {
+  - id : Integer
+  - dateVisite : Date
+  - theme : String
+  - langue : String
+  - capaciteMax : Integer
+  - duree : Integer
+  --
+  + ajouterParticipant(visiteur : Visiteur) : Boolean
+  + estComplete() : Boolean
+  + retirerParticipant(visiteur : Visiteur) : void
+}
+
+class Guide <<Entity>> {
+  - id : String
+  - nom : String
+  - email : String
+  - langues : List<String>
+  - specialites : List<String>
+  --
+  + estDisponible(date : Date) : Boolean
+  + getVisitesAVenir() : List<VisiteGuidee>
+}
+
+class Conservateur <<Entity>> {
+  - id : String
+  - nom : String
+  - email : String
+  - specialite : String
+  --
+  + ajouterOeuvre(oeuvre : Oeuvre) : void
+  + creerExposition(expo : Exposition) : void
+}
+
+' ====== ÉNUMÉRATIONS ======
+
+enum TypeVisiteur <<Enum>> {
+  INDIVIDUEL
+  GROUPE
+  SCOLAIRE
+  PROFESSIONNEL
+}
+
+enum TypeBillet <<Enum>> {
+  PLEIN_TARIF
+  REDUIT
+  GRATUIT
+  GROUPE
+}
+
+enum StatutBillet <<Enum>> {
+  VALIDE
+  UTILISE
+  ANNULE
+  EXPIRE
+}
+
+enum StatutReservation <<Enum>> {
+  EN_ATTENTE
+  CONFIRMEE
+  ANNULEE
+  EXPIREE
+}
+
+enum TypeExposition <<Enum>> {
+  PERMANENTE
+  TEMPORAIRE
+}
+
+enum StyleArtistique <<Enum>> {
+  CONTEMPORAIN
+  MODERNE
+  CLASSIQUE
+  ABSTRAIT
+  IMPRESSIONNISTE
+  AUTRES
+}
+
+' ====== RELATIONS ======
+
+' Visiteur et Réservations
+Visiteur "1" -- "0..*" Reservation : effectue >
+Visiteur "0..*" -- "0..*" VisiteGuidee : participe >
+
+' Réservation et Billets
+Reservation "1" *-- "1..*" Billet : contient >
+
+' Exposition et Œuvres
+Exposition "0..*" -- "0..*" Oeuvre : présente >
+
+' Visite Guidée
+VisiteGuidee "0..*" -- "1" Guide : animée par >
+VisiteGuidee "0..*" -- "1" Exposition : concerne >
+
+' Conservateur et Œuvres
+Conservateur "1" -- "0..*" Oeuvre : gère >
+Conservateur "1" -- "0..*" Exposition : organise >
+
+' Relations avec énumérations
+Visiteur --> TypeVisiteur
+Billet --> TypeBillet
+Billet --> StatutBillet
+Reservation --> StatutReservation
+Exposition --> TypeExposition
+Oeuvre --> StyleArtistique
+
+' ====== NOTES ======
+
+note right of Reservation
+  Le numéro de confirmation
+  est unique et généré
+  automatiquement
+end note
+
+note bottom of VisiteGuidee
+  Contrainte: max 20 participants
+  par visite guidée
+end note
+
+note right of Billet
+  Le QR code permet l'entrée
+  au musée et est unique
+  par billet
+end note
+
+note top of Exposition
+  Une exposition temporaire a
+  dateDebut et dateFin définies.
+  Une permanente n'a pas de dateFin.
+end note
+
+' ====== CONTRAINTES ======
+
+note "Règle de gestion RG-01:\nTarif plein = 12€\nTarif réduit = 8€" as RG1
+RG1 .. Billet
+
+note "Règle de gestion RG-03:\nMax 20 participants\npar visite guidée" as RG3
+RG3 .. VisiteGuidee
+
+note "Règle de gestion RG-04:\nRéservation expire après\n15 minutes si non confirmée" as RG4
+RG4 .. Reservation
+
+@enduml

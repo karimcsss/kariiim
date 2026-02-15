@@ -88,6 +88,14 @@ Voir la [grille d'évaluation détaillée](docs/evaluation/Grille_Evaluation.md)
 - [Semaine 6-7 - Diagramme de classes](docs/semaine_6-7/README.md)
 - [Semaine 8 - Consolidation](docs/semaine_8/README.md)
 
+### PlantUML - Code source des diagrammes
+
+- **[📁 Dossier PlantUML](plantuml/)** - Fichiers .puml pour générer les diagrammes
+- **[📖 Guide PlantUML](docs/PLANTUML_GUIDE.md)** - Tutoriel complet pour créer vos diagrammes
+- [Diagramme de cas d'utilisation](plantuml/diagramme_cas_utilisation.puml)
+- [Diagramme de séquence](plantuml/diagramme_sequence_reservation.puml)
+- [Diagramme de classes](plantuml/diagramme_classes_musee.puml)
+
 ### Templates de documents
 
 - [Modèle de cahier des charges](docs/templates/Cahier_des_charges.md)

@@ -1,0 +1,118 @@
+@startuml Diagramme_Sequence_Reservation_Billet
+
+title Réserver un Billet - Scénario Nominal
+
+' Déclaration des participants
+actor Visiteur as V
+participant ":InterfaceReservation" as UI <<Boundary>>
+participant ":ControleurReservation" as CTRL <<Control>>
+participant ":GestionVisiteur" as GV <<Control>>
+participant ":GestionBillets" as GB <<Control>>
+participant "visiteur:Visiteur" as VIS <<Entity>>
+participant "billet:Billet" as BIL <<Entity>>
+participant "reservation:Reservation" as RES <<Entity>>
+participant ":SystemePaiement" as PAY <<External>>
+database ":BaseDonnees" as DB
+
+' Séquence d'interactions
+autonumber
+
+== Sélection de la date ==
+V -> UI : sélectionnerDate(date)
+activate UI
+UI -> CTRL : vérifierDisponibilité(date)
+activate CTRL
+CTRL -> GB : getCreneauxDisponibles(date)
+activate GB
+GB -> DB : SELECT créneaux WHERE date=...
+activate DB
+DB --> GB : liste créneaux
+deactivate DB
+GB --> CTRL : créneaux disponibles
+deactivate GB
+CTRL --> UI : afficherCreneaux(créneaux)
+deactivate CTRL
+UI --> V : afficherOptionsHoraires()
+deactivate UI
+
+== Sélection et calcul ==
+V -> UI : sélectionnerCréneau(créneau)
+V -> UI : sélectionnerTypeBillet(type, quantité)
+activate UI
+UI -> CTRL : calculerMontant(type, quantité)
+activate CTRL
+CTRL -> BIL ** : <<create>>(type, quantité, montant)
+activate BIL
+BIL -> BIL : calculerPrix()
+BIL --> CTRL : montant
+deactivate BIL
+CTRL --> UI : afficherMontant(total)
+deactivate CTRL
+UI --> V : afficherRecapitulatif()
+deactivate UI
+
+== Création de la réservation ==
+V -> UI : confirmerReservation()
+activate UI
+UI -> CTRL : créerReservation(visiteur, billet, créneau)
+activate CTRL
+CTRL -> GV : getVisiteur(visiteurId)
+activate GV
+GV -> DB : SELECT visiteur WHERE id=...
+activate DB
+DB --> GV : données visiteur
+deactivate DB
+GV -> VIS ** : <<create>>
+activate VIS
+VIS --> GV : visiteur
+deactivate VIS
+GV --> CTRL : visiteur
+deactivate GV
+
+CTRL -> RES ** : <<create>>(visiteur, billet, créneau)
+activate RES
+RES -> RES : générerNuméroConfirmation()
+CTRL -> DB : INSERT reservation (statut='EN_ATTENTE')
+activate DB
+DB --> CTRL : ok
+deactivate DB
+deactivate RES
+
+== Traitement du paiement ==
+CTRL -> PAY : traiterPaiement(montant, visiteur)
+activate PAY
+PAY --> CTRL : paiementAccepté
+deactivate PAY
+
+CTRL -> RES : confirmer()
+activate RES
+RES -> DB : UPDATE reservation SET statut='CONFIRMÉE'
+activate DB
+DB --> RES : ok
+deactivate DB
+deactivate RES
+
+CTRL -> RES : générerQRCode()
+activate RES
+RES -> RES : créerQRCode()
+RES --> CTRL : qrCode
+deactivate RES
+
+CTRL --> UI : réservationConfirmée(numéro, qrCode)
+deactivate CTRL
+UI --> V : afficherConfirmation()
+UI -> UI : envoyerEmailConfirmation(visiteur, qrCode)
+deactivate UI
+
+' Notes explicatives
+note right of PAY
+  Système externe de
+  paiement sécurisé
+end note
+
+note right of RES
+  Le QR code sera scanné
+  à l'entrée du musée
+end note
+
+@enduml
