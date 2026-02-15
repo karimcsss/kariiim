@@ -26,7 +26,7 @@
 
 2. **Analyse du vocabulaire métier** :
    - Les noms du glossaire sont souvent des classes
-   - Exemples : Client, Commande, Produit, Facture
+   - Exemples : Visiteur, Reservation, Oeuvre, Exposition
 
 3. **Analyse des besoins** :
    - Identifier les concepts métier dans les BF
@@ -93,10 +93,10 @@ ClasseA ----------- ClasseB
 
 **Exemples** :
 ```
-Client -------- 0..* Commande
-       passe
+Visiteur -------- 0..* Reservation
+       effectue
 
-Commande -------- 1..* LigneCommande
+Reservation -------- 1..* Billet
          contient
 
 Étudiant -------- 0..* Cours
@@ -122,7 +122,7 @@ Commande -------- 1..* LigneCommande
 
 **Notation** : Losange plein du côté du tout
 ```
-Commande ◆-------- * LigneCommande
+Reservation ◆-------- * Billet
 ```
 
 **Caractéristiques** :
@@ -171,9 +171,9 @@ visibilité nom(paramètres) : typeRetour
 
 **Exemples** :
 ```
-+ ajouterLigne(produit: Produit, quantité: Integer) : void
-+ calculerTotal() : Double
-- validerCommande() : Boolean
++ ajouterBillet(type: TypeBillet, quantité: Integer) : void
++ calculerMontant() : Double
+- confirmerReservation() : Boolean
 ```
 
 **Conseil** : Ne mettez que les méthodes métier importantes. Les getters/setters peuvent être omis.
@@ -271,9 +271,9 @@ visibilité nom(paramètres) : typeRetour
 
 ### Patterns courants
 
-**Pattern 1 : Commande**
+**Pattern 1 : Réservation de musée**
 ```
-Client ----- * Commande ◆----- * LigneCommande ----- Produit
+Visiteur ----- * Reservation ◆----- * Billet ----- TypeBillet
 ```
 
 **Pattern 2 : Utilisateur avec rôles**
@@ -286,11 +286,11 @@ Client ----- * Commande ◆----- * LigneCommande ----- Produit
   Administrateur  Client
 ```
 
-**Pattern 3 : Réservation**
+**Pattern 3 : Visite guidée**
 ```
-Client ----- * Réservation ----- Ressource
+Visiteur ----- * VisiteGuidee ----- Guide
                     |
-                   Date
+               Exposition
 ```
 
 ---
@@ -299,10 +299,10 @@ Client ----- * Réservation ----- Ressource
 
 | Classe | Description | Attributs clés |
 |--------|-------------|----------------|
-| Client | Personne effectuant des achats | nom, email, adresse |
-| Commande | Achat effectué par un client | numéro, date, statut |
-| Produit | Article disponible à la vente | référence, nom, prix |
-| LigneCommande | Ligne dans une commande | quantité, prixUnitaire |
+| Visiteur | Personne visitant le musée | nom, email, telephone |
+| Reservation | Réservation de billet | numeroConfirmation, dateVisite, statut |
+| Oeuvre | Pièce artistique exposée | titre, artiste, annee |
+| Billet | Droit d'entrée au musée | type, prix, qrCode |
 
 ---
 

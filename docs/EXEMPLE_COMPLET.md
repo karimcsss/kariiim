@@ -1,8 +1,8 @@
-# Exemples Pratiques – Système de Gestion de Bibliothèque
+# Exemples Pratiques – Système de Gestion de Musée
 
 Ce document présente un exemple complet de projet pour illustrer chaque livrable attendu.
 
-**Projet exemple** : Système de gestion de bibliothèque universitaire
+**Projet exemple** : Système de gestion de musée d'art contemporain
 
 ---
 
@@ -10,50 +10,54 @@ Ce document présente un exemple complet de projet pour illustrer chaque livrabl
 
 ### 1.1 Contexte
 
-La bibliothèque universitaire XYZ gère actuellement ses prêts de livres manuellement sur papier. Ce processus est lent, source d'erreurs et ne permet pas un suivi efficace des emprunts. La direction souhaite informatiser la gestion de la bibliothèque.
+Le musée d'art contemporain XYZ gère actuellement ses visites, réservations et expositions manuellement sur papier et tableur Excel. Ce processus est inefficace, source d'erreurs et ne permet pas un suivi en temps réel des visiteurs et des œuvres. La direction souhaite informatiser la gestion du musée.
 
 ### 1.2 Problématique
 
-Comment digitaliser la gestion des emprunts pour améliorer l'efficacité, réduire les erreurs et offrir un meilleur service aux étudiants ?
+Comment digitaliser la gestion des visites, réservations et expositions pour améliorer l'expérience visiteur, optimiser la gestion des collections et faciliter l'organisation des événements culturels ?
 
 ### 1.3 Objectifs du système
 
 | ID | Objectif | Description | Mesurable |
 |----|----------|-------------|-----------|
-| OBJ-01 | Automatiser les emprunts | Permettre l'enregistrement électronique des emprunts | Temps de traitement < 1 min |
-| OBJ-02 | Améliorer le suivi | Suivre en temps réel les livres disponibles | Taux de disponibilité = 100% |
-| OBJ-03 | Faciliter la recherche | Permettre aux étudiants de chercher des livres en ligne | Temps de recherche < 30s |
+| OBJ-01 | Automatiser les réservations | Permettre la réservation en ligne de billets et visites guidées | Temps de réservation < 2 min |
+| OBJ-02 | Améliorer le suivi | Suivre en temps réel les visiteurs et la disponibilité des expositions | Taux de remplissage visible en temps réel |
+| OBJ-03 | Faciliter la recherche | Permettre aux visiteurs de consulter les œuvres et expositions en ligne | Temps de recherche < 30s |
 
 ### 1.4 Acteurs
 
 | Acteur | Description | Rôle |
 |--------|-------------|------|
-| Étudiant | Utilisateur inscrit à l'université | Emprunter et retourner des livres |
-| Bibliothécaire | Personnel de la bibliothèque | Gérer le catalogue et les emprunts |
+| Visiteur | Personne souhaitant visiter le musée | Réserver des billets, consulter les expositions |
+| Guide | Personnel du musée assurant les visites guidées | Gérer les groupes et animer les visites |
+| Conservateur | Responsable des collections et expositions | Gérer les œuvres, organiser les expositions |
 | Administrateur | Responsable du système | Gérer les utilisateurs et les paramètres |
 
 ### 1.5 Périmètre
 
 **Inclus** :
-- Recherche de livres dans le catalogue
-- Emprunt et retour de livres
-- Gestion des réservations
-- Calcul automatique des amendes
-- Gestion du catalogue
+- Consultation des œuvres et expositions en ligne
+- Réservation de billets (individuels et groupes)
+- Gestion des visites guidées
+- Gestion du catalogue des œuvres
+- Gestion des expositions temporaires et permanentes
+- Statistiques de fréquentation
 
 **Exclus** :
-- Gestion des achats de nouveaux livres
-- Système de facturation des amendes
+- Gestion de la boutique du musée
+- Système de paiement en ligne (phase 2)
 - Application mobile (phase 2)
+- Gestion de la restauration des œuvres
 
 ### 1.6 Glossaire métier
 
 | Terme | Définition | Exemple |
 |-------|------------|---------|
-| Emprunt | Action de prendre un livre pour une durée limitée | Durée standard: 14 jours |
-| Réservation | Demande pour emprunter un livre actuellement indisponible | Max 3 réservations simultanées |
-| Amende | Pénalité financière pour retard de retour | 0,50€ par jour de retard |
-| Exemplaire | Copie physique d'un livre | Un livre peut avoir plusieurs exemplaires |
+| Œuvre | Pièce artistique exposée dans le musée | Tableau, sculpture, installation |
+| Exposition | Présentation thématique d'un ensemble d'œuvres | Durée: 3 à 6 mois |
+| Visite guidée | Visite accompagnée par un guide du musée | Max 20 personnes par groupe |
+| Billet | Droit d'entrée au musée | Tarif plein: 12€, réduit: 8€ |
+| Collection | Ensemble d'œuvres appartenant au musée | Collection permanente vs temporaire |
 
 ---
 
@@ -62,38 +66,38 @@ Comment digitaliser la gestion des emprunts pour améliorer l'efficacité, rédu
 ### 2.1 Besoins Fonctionnels (exemples)
 
 **BF-01 : S'authentifier**
-- **Description** : Le système doit permettre aux utilisateurs de s'authentifier avec leur identifiant universitaire et mot de passe
-- **Acteur(s)** : Étudiant, Bibliothécaire, Administrateur
+- **Description** : Le système doit permettre aux utilisateurs de s'authentifier avec leur identifiant et mot de passe
+- **Acteur(s)** : Visiteur, Guide, Conservateur, Administrateur
 - **Priorité** : Must have
 - **Critère de validation** : Connexion réussie avec redirection vers l'espace personnel
 
-**BF-02 : Rechercher un livre**
-- **Description** : Le système doit permettre de rechercher un livre par titre, auteur, ISBN ou mot-clé
-- **Acteur(s)** : Étudiant, Bibliothécaire
+**BF-02 : Consulter les œuvres**
+- **Description** : Le système doit permettre de rechercher une œuvre par titre, artiste, période ou style
+- **Acteur(s)** : Visiteur, Guide, Conservateur
 - **Priorité** : Must have
 - **Critère de validation** : Résultats affichés en moins de 2 secondes
 
-**BF-03 : Emprunter un livre**
-- **Description** : Le système doit permettre à un étudiant d'emprunter un livre disponible
-- **Acteur(s)** : Étudiant (initiateur), Bibliothécaire (validation)
+**BF-03 : Réserver un billet**
+- **Description** : Le système doit permettre à un visiteur de réserver un billet d'entrée pour une date donnée
+- **Acteur(s)** : Visiteur
 - **Priorité** : Must have
-- **Critère de validation** : Emprunt enregistré avec date de retour calculée
+- **Critère de validation** : Réservation enregistrée avec numéro de confirmation
 
-**BF-04 : Réserver un livre**
-- **Description** : Le système doit permettre à un étudiant de réserver un livre actuellement emprunté
-- **Acteur(s)** : Étudiant
+**BF-04 : Réserver une visite guidée**
+- **Description** : Le système doit permettre à un visiteur de réserver une visite guidée
+- **Acteur(s)** : Visiteur
 - **Priorité** : Should have
-- **Critère de validation** : Réservation enregistrée, notification envoyée lors de la disponibilité
+- **Critère de validation** : Réservation enregistrée, notification envoyée au guide
 
-**BF-05 : Retourner un livre**
-- **Description** : Le système doit permettre d'enregistrer le retour d'un livre et calculer une éventuelle amende
-- **Acteur(s)** : Bibliothécaire
+**BF-05 : Gérer les expositions**
+- **Description** : Le système doit permettre au conservateur de créer, modifier ou clôturer des expositions
+- **Acteur(s)** : Conservateur
 - **Priorité** : Must have
-- **Critère de validation** : Retour enregistré, amende calculée si retard
+- **Critère de validation** : Exposition visible immédiatement sur le site
 
-**BF-06 : Gérer le catalogue**
-- **Description** : Le système doit permettre au bibliothécaire d'ajouter, modifier ou supprimer des livres du catalogue
-- **Acteur(s)** : Bibliothécaire
+**BF-06 : Gérer les œuvres**
+- **Description** : Le système doit permettre au conservateur d'ajouter, modifier ou retirer des œuvres du catalogue
+- **Acteur(s)** : Conservateur
 - **Priorité** : Must have
 - **Critère de validation** : Modifications visibles immédiatement dans la recherche
 
@@ -107,8 +111,8 @@ Comment digitaliser la gestion des emprunts pour améliorer l'efficacité, rédu
 
 **BNF-02 : Disponibilité**
 - **Catégorie** : Disponibilité
-- **Description** : Le système doit être disponible de 7h à 23h, 7j/7
-- **Critère de mesure** : Uptime ≥ 98%
+- **Description** : Le système doit être disponible 24h/24, 7j/7 pour les consultations en ligne
+- **Critère de mesure** : Uptime ≥ 99%
 - **Priorité** : Should have
 
 **BNF-03 : Sécurité des données**
@@ -132,175 +136,204 @@ Comment digitaliser la gestion des emprunts pour améliorer l'efficacité, rédu
 ### 2.3 Diagramme de cas d'utilisation (description textuelle)
 
 ```
-Système : Gestion de Bibliothèque
+Système : Gestion de Musée
 
 Acteurs externes :
-- Étudiant (à gauche)
-- Bibliothécaire (à gauche)
+- Visiteur (à gauche)
+- Guide (à gauche)
+- Conservateur (à gauche)
 - Administrateur (à gauche)
+- Système de paiement (à droite)
 - Système de notification (à droite)
 
 Cas d'utilisation :
 
-Pour Étudiant :
+Pour Visiteur :
+- S'inscrire
 - S'authentifier
-- Rechercher un livre
-- Consulter son compte
-- Emprunter un livre
+- Consulter les œuvres
+- Consulter les expositions
+- Réserver un billet
   <<include>> Vérifier disponibilité
-  <<include>> Vérifier quota (max 5 emprunts)
-- Réserver un livre
-- Renouveler un emprunt <<extend>> Emprunter un livre
+  <<include>> Sélectionner la date
+- Réserver une visite guidée
+- Annuler une réservation <<extend>> Réserver un billet
 
-Pour Bibliothécaire :
+Pour Guide :
 - S'authentifier
-- Enregistrer un retour
-  <<include>> Calculer amende
-- Valider un emprunt
-- Gérer le catalogue
-  - Ajouter un livre
-  - Modifier un livre
-  - Supprimer un livre
+- Consulter son planning
+- Gérer les groupes de visite
+- Marquer la présence des visiteurs
+
+Pour Conservateur :
+- S'authentifier
+- Gérer les œuvres
+  - Ajouter une œuvre
+  - Modifier une œuvre
+  - Retirer une œuvre
+- Gérer les expositions
+  - Créer une exposition
+  - Modifier une exposition
+  - Clôturer une exposition
+- Consulter les statistiques
 
 Pour Administrateur :
 - S'authentifier (généralisation de S'authentifier)
 - Gérer les utilisateurs
-- Consulter les statistiques
-- Configurer les paramètres
+- Consulter les statistiques de fréquentation
+- Configurer les paramètres du musée
 
-Interactions avec système externe :
+Interactions avec systèmes externes :
+- Traiter le paiement → Système de paiement
 - Envoyer notification → Système de notification
 ```
 
 ### 2.4 Description détaillée d'un cas d'utilisation
 
-**UC-03 : Emprunter un livre**
+**UC-03 : Réserver un billet**
 
 **Informations générales**
 - **ID** : UC-03
-- **Acteur principal** : Étudiant
-- **Acteur secondaire** : Bibliothécaire
+- **Acteur principal** : Visiteur
+- **Acteur secondaire** : Système de paiement
 - **Priorité** : Must have
 
 **Description**
-Permet à un étudiant d'emprunter un livre disponible à la bibliothèque.
+Permet à un visiteur de réserver un billet d'entrée au musée pour une date donnée.
 
 **Préconditions**
-- L'étudiant est authentifié
-- L'étudiant n'a pas atteint son quota d'emprunts (max 5)
-- L'étudiant n'a pas d'amende impayée > 10€
+- Le visiteur est authentifié (ou peut réserver en tant qu'invité)
+- Le musée est ouvert à la date souhaitée
+- Il reste des places disponibles pour cette date
 
 **Scénario nominal**
-1. L'étudiant scanne sa carte étudiante
-2. Le système affiche les informations de l'étudiant
-3. Le bibliothécaire scanne le code-barres du livre
-4. Le système vérifie la disponibilité du livre
-5. Le système vérifie le quota d'emprunts de l'étudiant
-6. Le système enregistre l'emprunt avec date de retour (J+14)
-7. Le système affiche la confirmation avec la date de retour
-8. Le système imprime un ticket de prêt
+1. Le visiteur sélectionne la date de visite souhaitée
+2. Le système affiche les créneaux horaires disponibles
+3. Le visiteur sélectionne un créneau horaire
+4. Le visiteur choisit le type de billet (plein tarif, réduit, gratuit)
+5. Le système calcule le montant total
+6. Le visiteur confirme la réservation
+7. Le système enregistre la réservation (statut : "en attente de paiement")
+8. Le système redirige vers le système de paiement
+9. Le système de paiement traite le paiement
+10. Le système marque la réservation comme "confirmée"
+11. Le système envoie un email de confirmation avec QR code
 
 **Postconditions**
-- Un emprunt est créé dans le système
-- Le livre est marqué comme "emprunté"
-- La date de retour est J+14
+- Une réservation est créée dans le système
+- Le billet est marqué comme "réservé"
+- Le visiteur reçoit un email avec son QR code
 
 **Scénarios alternatifs**
-- **A1 - Livre indisponible** (divergence à l'étape 4)
-  - Le système affiche "Livre indisponible"
-  - Le système propose de réserver le livre
-  - Si l'étudiant accepte → UC-04 : Réserver un livre
+- **A1 - Aucune place disponible** (divergence à l'étape 2)
+  - Le système affiche "Aucun créneau disponible pour cette date"
+  - Le système propose d'autres dates
+  - Retour à l'étape 1
   
-- **A2 - Quota atteint** (divergence à l'étape 5)
-  - Le système affiche "Quota d'emprunts atteint (5/5)"
-  - L'emprunt est refusé
+- **A2 - Paiement refusé** (divergence à l'étape 9)
+  - Le système affiche "Paiement refusé"
+  - La réservation reste "en attente" pendant 15 minutes
+  - Le visiteur peut retenter le paiement
   - Fin du cas d'utilisation
 
 **Exceptions**
-- **E1 - Carte étudiante invalide** (étape 1)
-  - Le système affiche "Carte non reconnue"
-  - Retour à l'étape 1
+- **E1 - Session expirée** (étape 6)
+  - Le système affiche "Session expirée"
+  - Retour à l'authentification
 
 **Exigences non fonctionnelles liées**
-- BNF-01 : Temps de traitement < 1 minute
+- BNF-01 : Temps de traitement < 2 minutes
 
 ---
 
 ## 3. Extrait des Diagrammes de Séquence
 
-### 3.1 UC-03 : Emprunter un livre (Scénario nominal)
+### 3.1 UC-03 : Réserver un billet (Scénario nominal)
 
 **Participants**
-- `Étudiant` : Acteur
-- `:InterfaceEmprunt` : Boundary (écran du bibliothécaire)
-- `:ControleurEmprunt` : Control (logique métier)
-- `:GestionLecteur` : Control (gestion des étudiants)
-- `:GestionCatalogue` : Control (gestion des livres)
-- `lecture:Lecteur` : Entity
-- `livre:Livre` : Entity
-- `emprunt:Emprunt` : Entity
+- `Visiteur` : Acteur
+- `:InterfaceReservation` : Boundary (écran web/mobile)
+- `:ControleurReservation` : Control (logique métier)
+- `:GestionVisiteur` : Control (gestion des visiteurs)
+- `:GestionBillets` : Control (gestion des billets)
+- `visiteur:Visiteur` : Entity
+- `billet:Billet` : Entity
+- `reservation:Reservation` : Entity
+- `:SystemePaiement` : Système externe
 - `:BaseDonnees` : Base de données
 
 **Description textuelle du flux**
 
 ```
-1. Étudiant → InterfaceEmprunt : scannerCarteEtudiante(carteId)
-2. InterfaceEmprunt → ControleurEmprunt : démarrerEmprunt(carteId)
-3. ControleurEmprunt → GestionLecteur : getLecteur(carteId)
-4. GestionLecteur → BaseDonnees : SELECT lecteur WHERE id=carteId
-5. BaseDonnees → GestionLecteur : données lecteur
-6. GestionLecteur → lecture:Lecteur : <<create>>
-7. GestionLecteur → ControleurEmprunt : lecteur
-8. ControleurEmprunt → InterfaceEmprunt : lecteurTrouvé(infos)
-9. InterfaceEmprunt → Étudiant : afficherInfosLecteur()
+1. Visiteur → InterfaceReservation : sélectionnerDate(date)
+2. InterfaceReservation → ControleurReservation : vérifierDisponibilité(date)
+3. ControleurReservation → GestionBillets : getCreneauxDisponibles(date)
+4. GestionBillets → BaseDonnees : SELECT créneaux WHERE date=...
+5. BaseDonnees → GestionBillets : liste créneaux
+6. GestionBillets → ControleurReservation : créneaux disponibles
+7. ControleurReservation → InterfaceReservation : afficherCreneaux(créneaux)
+8. InterfaceReservation → Visiteur : afficherOptionsHoraires()
 
-10. Bibliothécaire → InterfaceEmprunt : scannerLivre(isbn)
-11. InterfaceEmprunt → ControleurEmprunt : ajouterLivre(isbn)
-12. ControleurEmprunt → GestionCatalogue : getLivre(isbn)
-13. GestionCatalogue → BaseDonnees : SELECT livre WHERE isbn=...
-14. BaseDonnees → GestionCatalogue : données livre
-15. GestionCatalogue → livre:Livre : <<create>>
-16. GestionCatalogue → ControleurEmprunt : livre
+9. Visiteur → InterfaceReservation : sélectionnerCréneau(créneau)
+10. Visiteur → InterfaceReservation : sélectionnerTypeBillet(type, quantité)
+11. InterfaceReservation → ControleurReservation : calculerMontant(type, quantité)
+12. ControleurReservation → billet:Billet : <<create>>(type, quantité, montant)
+13. billet → billet : calculerPrix()
+14. ControleurReservation → InterfaceReservation : afficherMontant(total)
+15. InterfaceReservation → Visiteur : afficherRecapitulatif()
 
-17. ControleurEmprunt → livre:Livre : estDisponible()
-18. livre → ControleurEmprunt : true
+16. Visiteur → InterfaceReservation : confirmerReservation()
+17. InterfaceReservation → ControleurReservation : créerReservation(visiteur, billet, créneau)
+18. ControleurReservation → GestionVisiteur : getVisiteur(visiteurId)
+19. GestionVisiteur → BaseDonnees : SELECT visiteur WHERE id=...
+20. BaseDonnees → GestionVisiteur : données visiteur
+21. GestionVisiteur → visiteur:Visiteur : <<create>>
+22. GestionVisiteur → ControleurReservation : visiteur
 
-19. ControleurEmprunt → lecteur:Lecteur : vérifierQuota()
-20. lecteur → ControleurEmprunt : quotaOK (3/5)
+23. ControleurReservation → reservation:Reservation : <<create>>(visiteur, billet, créneau)
+24. reservation → reservation : générerNuméroConfirmation()
+25. ControleurReservation → BaseDonnees : INSERT reservation (statut='EN_ATTENTE')
+26. BaseDonnees → ControleurReservation : ok
 
-21. ControleurEmprunt → emprunt:Emprunt : <<create>>(lecteur, livre)
-22. emprunt → emprunt : calculerDateRetour() [J+14]
-23. ControleurEmprunt → BaseDonnees : INSERT emprunt
-24. BaseDonnees → ControleurEmprunt : ok
+27. ControleurReservation → SystemePaiement : traiterPaiement(montant, visiteur)
+28. SystemePaiement → ControleurReservation : paiementAccepté
 
-25. ControleurEmprunt → livre:Livre : marquerEmprunté()
-26. livre → BaseDonnees : UPDATE livre SET statut='EMPRUNTE'
-27. BaseDonnees → livre : ok
+29. ControleurReservation → reservation:Reservation : confirmer()
+30. reservation → BaseDonnees : UPDATE reservation SET statut='CONFIRMÉE'
+31. BaseDonnees → reservation : ok
 
-28. ControleurEmprunt → InterfaceEmprunt : empruntCréé(dateRetour)
-29. InterfaceEmprunt → Étudiant : afficherConfirmation(dateRetour)
-30. InterfaceEmprunt : imprimerTicket(emprunt)
+32. ControleurReservation → reservation:Reservation : générerQRCode()
+33. reservation → reservation : créerQRCode()
+
+34. ControleurReservation → InterfaceReservation : réservationConfirmée(numéro, qrCode)
+35. InterfaceReservation → Visiteur : afficherConfirmation()
+36. InterfaceReservation : envoyerEmailConfirmation(visiteur, qrCode)
 ```
 
 **Points clés à commenter dans le diagramme**
 
 1. **Séparation des responsabilités** : 
-   - InterfaceEmprunt gère l'affichage
-   - ControleurEmprunt orchestre le processus
-   - GestionLecteur et GestionCatalogue gèrent leurs domaines respectifs
+   - InterfaceReservation gère l'affichage
+   - ControleurReservation orchestre le processus
+   - GestionVisiteur et GestionBillets gèrent leurs domaines respectifs
 
-2. **Vérifications** (étapes 17-20) :
-   - Disponibilité du livre
-   - Quota de l'étudiant
-   - Application des règles métier
+2. **Vérifications** (étapes 2-7) :
+   - Disponibilité des créneaux pour la date choisie
+   - Calcul du montant selon le type de billet
+   - Application des règles tarifaires
 
-3. **Création de l'emprunt** (étapes 21-24) :
-   - Création de l'objet Emprunt
-   - Calcul de la date de retour (règle: J+14)
-   - Persistance en base de données
+3. **Création de la réservation** (étapes 23-26) :
+   - Création de l'objet Reservation
+   - Génération d'un numéro de confirmation unique
+   - Persistance en base de données (statut initial: EN_ATTENTE)
 
-4. **Mise à jour du statut** (étapes 25-27) :
-   - Le livre est marqué comme emprunté
+4. **Traitement du paiement** (étapes 27-31) :
+   - Interaction avec le système de paiement externe
+   - Mise à jour du statut après confirmation
+   - Génération du QR code pour l'entrée
+
+5. **Notification** (étape 36) :
+   - Email automatique avec confirmation et QR code
    - Cohérence des données assurée
 
 ---
@@ -309,181 +342,203 @@ Permet à un étudiant d'emprunter un livre disponible à la bibliothèque.
 
 ### 4.1 Dictionnaire des classes principales
 
-**Classe : Lecteur**
-- **Description** : Représente un étudiant ou membre du personnel autorisé à emprunter des livres
-- **Responsabilités** : Gérer les informations personnelles, vérifier le quota d'emprunts
+**Classe : Visiteur**
+- **Description** : Représente une personne visitant le musée
+- **Responsabilités** : Gérer les informations personnelles, historique de visites
 - **Attributs** :
-  - `- id : String` - Identifiant unique (numéro étudiant)
+  - `- id : String` - Identifiant unique
   - `- nom : String` - Nom complet
   - `- email : String` - Adresse email
-  - `- type : TypeLecteur` - Type (ETUDIANT, ENSEIGNANT, PERSONNEL)
+  - `- telephone : String` - Numéro de téléphone
+  - `- typeVisiteur : TypeVisiteur` - Type (INDIVIDUEL, GROUPE, SCOLAIRE)
   - `- dateInscription : Date` - Date d'inscription
-  - `- maxEmprunts : Integer` - Nombre max d'emprunts simultanés (5 pour étudiants)
 - **Méthodes** :
-  - `+ peutEmprunter() : Boolean` - Vérifie si le lecteur peut emprunter
-  - `+ getNombreEmpruntsActifs() : Integer` - Compte les emprunts en cours
+  - `+ peutReserver() : Boolean` - Vérifie si le visiteur peut réserver
+  - `+ getHistoriqueVisites() : List<Visite>` - Retourne l'historique des visites
 
-**Classe : Livre**
-- **Description** : Représente un ouvrage du catalogue (métadonnées)
-- **Responsabilités** : Stocker les informations bibliographiques
+**Classe : Oeuvre**
+- **Description** : Représente une pièce artistique du musée
+- **Responsabilités** : Stocker les informations sur l'œuvre
 - **Attributs** :
-  - `- isbn : String` - Code ISBN unique
-  - `- titre : String` - Titre du livre
-  - `- auteur : String` - Auteur principal
-  - `- editeur : String` - Maison d'édition
-  - `- anneePublication : Integer` - Année de publication
-  - `- categorie : Categorie` - Catégorie (ROMAN, SCIENCES, etc.)
+  - `- id : String` - Identifiant unique
+  - `- titre : String` - Titre de l'œuvre
+  - `- artiste : String` - Nom de l'artiste
+  - `- annee : Integer` - Année de création
+  - `- technique : String` - Technique utilisée (huile, sculpture, etc.)
+  - `- dimensions : String` - Dimensions de l'œuvre
+  - `- description : Text` - Description détaillée
+  - `- style : StyleArtistique` - Style (CONTEMPORAIN, MODERNE, etc.)
 - **Méthodes** :
-  - `+ getExemplairesDisponibles() : Integer` - Nombre d'exemplaires disponibles
+  - `+ estExposee() : Boolean` - Vérifie si l'œuvre est actuellement exposée
+  - `+ getExposition() : Exposition` - Retourne l'exposition courante
 
-**Classe : Exemplaire**
-- **Description** : Représente une copie physique d'un livre
-- **Responsabilités** : Gérer le statut et la localisation d'une copie
-- **Attributs** :
-  - `- codeExemplaire : String` - Code unique de l'exemplaire
-  - `- statut : StatutExemplaire` - DISPONIBLE, EMPRUNTE, RESERVE, PERDU
-  - `- dateAcquisition : Date` - Date d'achat
-  - `- localisation : String` - Rayon de rangement
-- **Méthodes** :
-  - `+ estDisponible() : Boolean` - Vérifie si l'exemplaire est disponible
-
-**Classe : Emprunt**
-- **Description** : Représente un prêt de livre à un lecteur
-- **Responsabilités** : Gérer le cycle de vie d'un emprunt
+**Classe : Exposition**
+- **Description** : Représente une exposition thématique au musée
+- **Responsabilités** : Gérer les œuvres exposées et les dates
 - **Attributs** :
   - `- id : Integer` - Identifiant unique
-  - `- dateEmprunt : Date` - Date de début
-  - `- dateRetourPrevue : Date` - Date de retour prévue (J+14)
-  - `- dateRetourEffective : Date` - Date de retour réel (null si en cours)
-  - `- statut : StatutEmprunt` - EN_COURS, TERMINE, EN_RETARD
+  - `- titre : String` - Titre de l'exposition
+  - `- description : Text` - Description thématique
+  - `- dateDebut : Date` - Date d'ouverture
+  - `- dateFin : Date` - Date de clôture
+  - `- type : TypeExposition` - PERMANENTE, TEMPORAIRE
+  - `- capaciteMax : Integer` - Nombre max de visiteurs simultanés
 - **Méthodes** :
-  - `+ calculerAmende() : Double` - Calcule l'amende en cas de retard
-  - `+ estEnRetard() : Boolean` - Vérifie si l'emprunt est en retard
-  - `+ prolonger() : void` - Prolonge l'emprunt de 7 jours
+  - `+ estActive() : Boolean` - Vérifie si l'exposition est en cours
+  - `+ getNombreVisiteurs() : Integer` - Nombre de visiteurs actuels
+
+**Classe : Billet**
+- **Description** : Représente un droit d'entrée au musée
+- **Responsabilités** : Gérer les informations tarifaires et la validité
+- **Attributs** :
+  - `- id : Integer` - Identifiant unique
+  - `- type : TypeBillet` - PLEIN_TARIF, REDUIT, GRATUIT, GROUPE
+  - `- prix : Double` - Prix du billet
+  - `- dateValidite : Date` - Date de validité
+  - `- qrCode : String` - Code QR pour l'entrée
+  - `- statut : StatutBillet` - VALIDE, UTILISE, ANNULE
+- **Méthodes** :
+  - `+ estValide() : Boolean` - Vérifie si le billet est valide
+  - `+ utiliser() : void` - Marque le billet comme utilisé
 
 **Classe : Reservation**
-- **Description** : Représente une demande de réservation d'un livre
-- **Responsabilités** : Gérer la file d'attente pour un livre
+- **Description** : Représente une réservation de billet
+- **Responsabilités** : Gérer le processus de réservation
 - **Attributs** :
   - `- id : Integer` - Identifiant unique
-  - `- dateReservation : Date` - Date de la demande
-  - `- statut : StatutReservation` - EN_ATTENTE, NOTIFIE, ANNULEE
-  - `- dateExpiration : Date` - Date limite pour retirer le livre
+  - `- numeroConfirmation : String` - Numéro de confirmation unique
+  - `- dateReservation : Date` - Date de la réservation
+  - `- dateVisite : Date` - Date de la visite prévue
+  - `- creneauHoraire : String` - Créneau horaire (ex: 10h-12h)
+  - `- statut : StatutReservation` - EN_ATTENTE, CONFIRMEE, ANNULEE
 - **Méthodes** :
-  - `+ notifierDisponibilite() : void` - Envoie une notification
+  - `+ confirmer() : void` - Confirme la réservation
   - `+ annuler() : void` - Annule la réservation
+  - `+ générerQRCode() : String` - Génère le QR code
 
-**Classe : Amende**
-- **Description** : Représente une pénalité financière
-- **Responsabilités** : Calculer et suivre les amendes
+**Classe : VisiteGuidee**
+- **Description** : Représente une visite accompagnée d'un guide
+- **Responsabilités** : Gérer les visites de groupe avec guide
 - **Attributs** :
   - `- id : Integer` - Identifiant unique
-  - `- montant : Double` - Montant en euros
-  - `- motif : String` - Raison de l'amende
-  - `- dateCreation : Date` - Date de création
-  - `- estPayee : Boolean` - Statut de paiement
+  - `- dateVisite : Date` - Date et heure de la visite
+  - `- theme : String` - Thème de la visite
+  - `- langue : String` - Langue de la visite
+  - `- capaciteMax : Integer` - Nombre max de participants (20)
+  - `- duree : Integer` - Durée en minutes (60 ou 90)
 - **Méthodes** :
-  - `+ marquerPayee() : void` - Marque l'amende comme payée
+  - `+ ajouterParticipant(visiteur) : Boolean` - Ajoute un participant
+  - `+ estComplete() : Boolean` - Vérifie si le groupe est complet
+**Classe : Guide**
+- **Description** : Représente un guide du musée
+- **Responsabilités** : Animer les visites guidées
+- **Attributs** :
+  - `- id : String` - Identifiant unique
+  - `- nom : String` - Nom complet
+  - `- email : String` - Adresse email
+  - `- langues : List<String>` - Langues parlées
+  - `- specialites : List<String>` - Spécialités (art contemporain, etc.)
+- **Méthodes** :
+  - `+ estDisponible(date) : Boolean` - Vérifie la disponibilité
+  - `+ getVisitesAVenir() : List<VisiteGuidee>` - Retourne les visites planifiées
 
 ### 4.2 Relations principales
 
-**Lecteur ←→ Emprunt**
+**Visiteur ←→ Reservation**
 - **Type** : Association
-- **Multiplicité** : `Lecteur 1 ──── 0..* Emprunt`
-- **Rôle** : Un lecteur effectue plusieurs emprunts
-- **Sémantique** : Un emprunt est toujours lié à un et un seul lecteur
+- **Multiplicité** : `Visiteur 1 ──── 0..* Reservation`
+- **Rôle** : Un visiteur effectue plusieurs réservations
+- **Sémantique** : Une réservation est toujours liée à un et un seul visiteur
 
-**Livre ←→ Exemplaire**
+**Reservation ←→ Billet**
 - **Type** : Composition
-- **Multiplicité** : `Livre 1 ◆──── 1..* Exemplaire`
-- **Rôle** : Un livre possède plusieurs exemplaires
-- **Sémantique** : Un exemplaire ne peut exister sans son livre parent
+- **Multiplicité** : `Reservation 1 ◆──── 1..* Billet`
+- **Rôle** : Une réservation contient un ou plusieurs billets
+- **Sémantique** : Un billet ne peut exister sans sa réservation parent
 
-**Emprunt ←→ Exemplaire**
+**Exposition ←→ Oeuvre**
+- **Type** : Association (many-to-many)
+- **Multiplicité** : `Exposition * ──── 0..* Oeuvre`
+- **Rôle** : Une exposition présente plusieurs œuvres, une œuvre peut être dans plusieurs expositions
+- **Sémantique** : Une œuvre peut être exposée dans plusieurs expositions au fil du temps
+
+**VisiteGuidee ←→ Guide**
 - **Type** : Association
-- **Multiplicité** : `Emprunt * ──── 1 Exemplaire`
-- **Rôle** : Un emprunt concerne un exemplaire
-- **Sémantique** : Un exemplaire peut avoir plusieurs emprunts dans son historique
+- **Multiplicité** : `VisiteGuidee * ──── 1 Guide`
+- **Rôle** : Une visite guidée est animée par un guide
+- **Sémantique** : Un guide peut animer plusieurs visites
 
-**Lecteur ←→ Reservation**
+**VisiteGuidee ←→ Visiteur**
+- **Type** : Association (many-to-many)
+- **Multiplicité** : `VisiteGuidee * ──── 0..20 Visiteur`
+- **Rôle** : Une visite peut accueillir jusqu'à 20 visiteurs
+- **Contrainte** : max = 20 participants
+
+**VisiteGuidee ←→ Exposition**
 - **Type** : Association
-- **Multiplicité** : `Lecteur 1 ──── 0..3 Reservation`
-- **Rôle** : Un lecteur peut avoir jusqu'à 3 réservations
-- **Contrainte** : max = 3
-
-**Livre ←→ Reservation**
-- **Type** : Association
-- **Multiplicité** : `Livre 1 ──── 0..* Reservation`
-- **Rôle** : Un livre peut avoir plusieurs réservations en attente
-
-**Emprunt ←→ Amende**
-- **Type** : Association
-- **Multiplicité** : `Emprunt 1 ──── 0..1 Amende`
-- **Rôle** : Un emprunt peut générer au plus une amende
-- **Sémantique** : Amende créée en cas de retard
-
-**Lecteur ←→ Amende**
-- **Type** : Association dérivée
-- **Multiplicité** : `Lecteur 1 ──── 0..* Amende`
-- **Rôle** : Un lecteur peut avoir plusieurs amendes
-- **Navigation** : Via les emprunts
+- **Multiplicité** : `VisiteGuidee * ──── 1 Exposition`
+- **Rôle** : Une visite guidée se déroule dans une exposition
+- **Sémantique** : Chaque visite est liée à une exposition spécifique
 
 ### 4.3 Énumérations
 
-**TypeLecteur**
-- ETUDIANT
-- ENSEIGNANT
-- PERSONNEL
+**TypeVisiteur**
+- INDIVIDUEL
+- GROUPE
+- SCOLAIRE
+- PROFESSIONNEL
 
-**StatutExemplaire**
-- DISPONIBLE
-- EMPRUNTE
-- RESERVE
-- EN_REPARATION
-- PERDU
+**TypeBillet**
+- PLEIN_TARIF
+- REDUIT
+- GRATUIT
+- GROUPE
 
-**StatutEmprunt**
-- EN_COURS
-- TERMINE
-- EN_RETARD
-- PROLONGE
+**StatutBillet**
+- VALIDE
+- UTILISE
+- ANNULE
+- EXPIRE
 
 **StatutReservation**
 - EN_ATTENTE
-- NOTIFIE
-- RETIREE
+- CONFIRMEE
 - ANNULEE
 - EXPIREE
 
-**Categorie**
-- ROMAN
-- SCIENCES
-- HISTOIRE
-- ART
-- TECHNIQUE
+**TypeExposition**
+- PERMANENTE
+- TEMPORAIRE
+
+**StyleArtistique**
+- CONTEMPORAIN
+- MODERNE
+- CLASSIQUE
+- ABSTRAIT
+- IMPRESSIONNISTE
 - AUTRES
 
 ### 4.4 Règles de gestion appliquées
 
-**RG-01 : Durée standard d'emprunt**
-- Un emprunt a une durée de 14 jours
-- Implémentation : Méthode `Emprunt.calculerDateRetour()`
+**RG-01 : Tarification**
+- Tarif plein: 12€, réduit: 8€, gratuit pour -18 ans
+- Implémentation : Méthode `Billet.calculerPrix()`
 
-**RG-02 : Quota d'emprunts**
-- Un étudiant peut emprunter maximum 5 livres simultanément
-- Implémentation : Attribut `Lecteur.maxEmprunts` et méthode `peutEmprunter()`
+**RG-02 : Capacité maximum des expositions**
+- Chaque exposition a une capacité maximale de visiteurs simultanés
+- Implémentation : Attribut `Exposition.capaciteMax` et méthode `peutAccueillir()`
 
-**RG-03 : Calcul des amendes**
-- 0,50€ par jour de retard
-- Implémentation : Méthode `Emprunt.calculerAmende()`
+**RG-03 : Taille des groupes de visite guidée**
+- Maximum 20 personnes par visite guidée
+- Implémentation : Multiplicité 0..20 dans la relation VisiteGuidee-Visiteur
 
-**RG-04 : Blocage si amende > 10€**
-- Un lecteur avec une amende > 10€ ne peut plus emprunter
-- Implémentation : Méthode `Lecteur.peutEmprunter()` vérifie le total des amendes
+**RG-04 : Validité des réservations**
+- Une réservation non confirmée expire après 15 minutes
+- Implémentation : Vérification dans `Reservation.estValide()`
 
-**RG-05 : Maximum de réservations**
-- Un lecteur peut avoir maximum 3 réservations simultanées
-- Implémentation : Multiplicité 0..3 dans la relation Lecteur-Reservation
+**RG-05 : Unicité du QR code**
+- Chaque billet a un QR code unique
+- Implémentation : Génération dans `Reservation.générerQRCode()`
 
 ---
 
@@ -493,35 +548,38 @@ Permet à un étudiant d'emprunter un livre disponible à la bibliothèque.
 
 | Besoin | Cas d'utilisation | Classes impliquées |
 |--------|-------------------|-------------------|
-| BF-01 | UC-01 : S'authentifier | Lecteur |
-| BF-02 | UC-02 : Rechercher un livre | Livre, Exemplaire |
-| BF-03 | UC-03 : Emprunter un livre | Lecteur, Emprunt, Exemplaire, Livre |
-| BF-04 | UC-04 : Réserver un livre | Lecteur, Reservation, Livre |
-| BF-05 | UC-05 : Retourner un livre | Emprunt, Exemplaire, Amende |
+| BF-01 | UC-01 : S'authentifier | Visiteur, Guide, Conservateur |
+| BF-02 | UC-02 : Consulter les œuvres | Oeuvre, Exposition |
+| BF-03 | UC-03 : Réserver un billet | Visiteur, Reservation, Billet |
+| BF-04 | UC-04 : Réserver une visite guidée | Visiteur, VisiteGuidee, Guide |
+| BF-05 | UC-05 : Gérer les expositions | Exposition, Oeuvre, Conservateur |
+| BF-06 | UC-06 : Gérer les œuvres | Oeuvre, Conservateur |
 
 ### 5.2 UC → Diagrammes de séquence
 
 | Cas d'utilisation | Diagramme fourni | Participants clés |
 |-------------------|------------------|-------------------|
-| UC-03 : Emprunter un livre | ✓ | Lecteur, Livre, Emprunt, Exemplaire |
-| UC-04 : Réserver un livre | ✓ | Lecteur, Livre, Reservation |
-| UC-05 : Retourner un livre | ✓ | Emprunt, Exemplaire, Amende |
+| UC-03 : Réserver un billet | ✓ | Visiteur, Reservation, Billet, Système de paiement |
+| UC-04 : Réserver une visite guidée | ✓ | Visiteur, VisiteGuidee, Guide |
+| UC-05 : Gérer les expositions | ✓ | Conservateur, Exposition, Oeuvre |
 
 ---
 
 ## 6. Points clés de cohérence
 
 ✅ **Vocabulaire uniforme** : 
-- "Lecteur" utilisé partout (pas "Utilisateur" ou "Étudiant")
-- "Exemplaire" pour la copie physique, "Livre" pour les métadonnées
+- "Visiteur" utilisé partout (pas "Client" ou "Utilisateur")
+- "Oeuvre" pour la pièce artistique, "Exposition" pour la présentation thématique
+- "Billet" pour le droit d'entrée, "Reservation" pour la demande
 
 ✅ **Acteurs cohérents** :
 - Les acteurs du CDC se retrouvent dans les UC
 - Les acteurs des UC apparaissent dans les diagrammes de séquence
 
 ✅ **Règles de gestion appliquées** :
-- Durée de 14 jours : dans CDC, BF, scénarios, et méthode `calculerDateRetour()`
-- Quota de 5 : dans CDC, BF, scénarios, et attribut `maxEmprunts`
+- Tarifs (12€ plein, 8€ réduit) : dans CDC, BF, scénarios, et méthode `calculerPrix()`
+- Capacité des groupes (20 max) : dans CDC, BF, scénarios, et multiplicité VisiteGuidee-Visiteur
+- Validité des réservations (15 min) : dans BNF, scénarios, et méthode `estValide()`
 
 ✅ **Entités tracées** :
 - Les entités des diagrammes de séquence deviennent les classes
@@ -531,10 +589,10 @@ Permet à un étudiant d'emprunter un livre disponible à la bibliothèque.
 
 ## Conclusion
 
-Cet exemple montre :
+Cet exemple de système de gestion de musée montre :
 1. Comment structurer chaque livrable
 2. Le niveau de détail attendu
 3. La cohérence entre tous les artefacts
-4. L'application pratique des concepts UML
+4. L'application pratique des concepts UML dans le contexte culturel
 
-**Utilisez cet exemple comme référence, mais adaptez-le à votre propre projet !**
+**Utilisez cet exemple comme référence, mais adaptez-le à votre propre projet de musée !**

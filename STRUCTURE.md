@@ -13,7 +13,7 @@ kariiim/
     │
     ├── 📄 GUIDE_RAPIDE.md                 # Guide de référence rapide
     ├── 📄 FAQ.md                          # Questions fréquentes (38 Q&R)
-    ├── 📄 EXEMPLE_COMPLET.md              # Exemple complet (bibliothèque)
+    ├── 📄 EXEMPLE_COMPLET.md              # Exemple complet (musée)
     ├── 📄 TRAVAIL_EQUIPE.md               # Conseils collaboration
     │
     ├── 📁 semaine_1/                      # Semaine 1 : Lancement & cadrage
@@ -56,7 +56,7 @@ kariiim/
 | **Planning_Encadrement.md** | Planning complet 8 semaines | 5-6 | Tous |
 | **GUIDE_RAPIDE.md** | Référence rapide, checklists | 8-10 | Étudiants |
 | **FAQ.md** | 38 questions-réponses | 15-18 | Étudiants |
-| **EXEMPLE_COMPLET.md** | Exemple système bibliothèque | 20-22 | Étudiants |
+| **EXEMPLE_COMPLET.md** | Exemple système de gestion de musée | 20-22 | Étudiants |
 | **TRAVAIL_EQUIPE.md** | Conseils collaboration | 10-12 | Étudiants |
 
 ### Guides hebdomadaires
@@ -203,7 +203,7 @@ Semaine 8  │ DOSSIER FINAL + SOUTENANCE
 - ✅ 8 semaines couvertes
 - ✅ 4 livrables majeurs documentés
 - ✅ 38 questions-réponses
-- ✅ 1 exemple complet (bibliothèque)
+- ✅ 1 exemple complet (système de musée)
 - ✅ Critères d'évaluation détaillés
 
 ---

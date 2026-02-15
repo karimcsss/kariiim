@@ -234,32 +234,35 @@ Acteur           :Interface       :Contrôleur      :Entité
 ## 📊 Exemple simplifié
 
 ```
-Cas d'utilisation : Emprunter un livre
-Acteur : Lecteur
+Cas d'utilisation : Réserver un billet
+Acteur : Visiteur
 
 Scénario nominal :
-1. Le lecteur scanne sa carte
-2. Le système affiche les informations du lecteur
-3. Le lecteur scanne le livre
-4. Le système vérifie la disponibilité
-5. Le système enregistre l'emprunt
-6. Le système affiche la confirmation
+1. Le visiteur sélectionne la date de visite
+2. Le système affiche les créneaux disponibles
+3. Le visiteur sélectionne un créneau et un type de billet
+4. Le système calcule le montant
+5. Le système crée la réservation
+6. Le système redirige vers le paiement
+7. Le système confirme et génère le QR code
 
 Diagramme de séquence :
-Lecteur -> Interface : scanner carte
-Interface -> GestionLecteur : vérifierLecteur(carteId)
-GestionLecteur -> BDLecteur : getLecteur(carteId)
-BDLecteur --> GestionLecteur : infoLecteur
-GestionLecteur --> Interface : lecteurValide
-Interface --> Lecteur : afficherInfoLecteur()
-Lecteur -> Interface : scannerLivre(livreId)
-Interface -> GestionEmprunt : créerEmprunt(lecteurId, livreId)
-GestionEmprunt -> BDLivre : vérifierDisponibilité(livreId)
-BDLivre --> GestionEmprunt : disponible
-GestionEmprunt -> BDEmprunt : enregistrerEmprunt(emprunt)
-BDEmprunt --> GestionEmprunt : ok
-GestionEmprunt --> Interface : empruntCréé
-Interface --> Lecteur : afficherConfirmation()
+Visiteur -> Interface : sélectionnerDate(date)
+Interface -> GestionBillets : getCreneauxDisponibles(date)
+GestionBillets -> BDCreneaux : getCreneaux(date)
+BDCreneaux --> GestionBillets : listeCreneaux
+GestionBillets --> Interface : créneauxDisponibles
+Interface --> Visiteur : afficherCreneaux()
+Visiteur -> Interface : sélectionnerCréneau(créneau, type)
+Interface -> GestionReservation : créerReservation(visiteurId, créneau, type)
+GestionReservation -> BDBillet : calculerMontant(type)
+BDBillet --> GestionReservation : montant
+GestionReservation -> BDReservation : enregistrerReservation(reservation)
+BDReservation --> GestionReservation : ok
+GestionReservation -> SystemePaiement : traiterPaiement(montant)
+SystemePaiement --> GestionReservation : confirmé
+GestionReservation --> Interface : réservationConfirmée(qrCode)
+Interface --> Visiteur : afficherConfirmation()
 ```
 
 ---

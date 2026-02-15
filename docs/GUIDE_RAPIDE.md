@@ -165,7 +165,7 @@ n..m : entre n et m
 
 ### Besoins
 ❌ BF trop techniques ("créer une API REST")  
-✅ BF métier ("permettre de rechercher un livre")
+✅ BF métier ("permettre de consulter les œuvres")
 
 ❌ BNF oubliés ou trop peu nombreux  
 ✅ Au moins 5-8 BNF dans différentes catégories

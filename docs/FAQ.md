@@ -146,13 +146,13 @@ Règle : Un UC = une valeur métier pour l'acteur.
 
 **R :**
 - **Boundary** (Frontière) : Interface avec l'extérieur (écran, API)
-  - Exemple : `:InterfaceConnexion`, `:PageCommande`
+  - Exemple : `:InterfaceReservation`, `:PageConsultation`
   
 - **Control** (Contrôle) : Logique métier, orchestration
-  - Exemple : `:GestionnaireCommande`, `:ControleurPaiement`
+  - Exemple : `:GestionnaireReservation`, `:ControleurBillet`
   
 - **Entity** (Entité) : Objets métier, données persistantes
-  - Exemple : `commande:Commande`, `client:Client`
+  - Exemple : `reservation:Reservation`, `visiteur:Visiteur`
 
 ### Q18 : Dois-je montrer tous les getters/setters ?
 
@@ -163,7 +163,7 @@ Règle : Un UC = une valeur métier pour l'acteur.
 Montrez plutôt :
 - `authentifier(login, password)`
 - `calculerTotal()`
-- `validerCommande()`
+- `confirmerReservation()`
 
 ### Q19 : Que faire si mon diagramme est trop chargé ?
 
@@ -188,12 +188,12 @@ Montrez plutôt :
 ### Q21 : Dois-je inclure les classes techniques (DAO, Service, etc.) ?
 
 **R :** Non. Le diagramme de classes **métier** ne contient que des concepts métier. Excluez :
-- ❌ UserDAO, CommandeService, PaiementController
+- ❌ VisiteurDAO, ReservationService, BilletController
 - ❌ HttpRequest, JsonResponse
 - ❌ Logger, Configuration
 
 Incluez seulement :
-- ✅ Client, Commande, Produit
+- ✅ Visiteur, Reservation, Oeuvre
 - ✅ Facture, Paiement, Livraison
 
 ### Q22 : Quelle est la différence entre agrégation et composition ?
@@ -203,7 +203,7 @@ Incluez seulement :
 **Composition** (losange plein ◆) : Relation forte, cycle de vie dépendant
 - La partie ne peut exister sans le tout
 - Si le tout est détruit, les parties aussi
-- Exemple : `Commande ◆── LigneCommande`
+- Exemple : `Reservation ◆── Billet`
   - Si la commande est supprimée, les lignes le sont aussi
 
 **Agrégation** (losange vide ◇) : Relation faible, cycle de vie indépendant
@@ -231,8 +231,8 @@ Incluez :
 - `*` ou `0..*` : zéro ou plusieurs
 
 Exemple :
-- `Client 1 ──── * Commande` : Un client peut avoir plusieurs commandes
-- `Commande 1 ──── 1..* LigneCommande` : Une commande a au moins une ligne
+- `Visiteur 1 ──── * Reservation` : Un visiteur peut avoir plusieurs réservations
+- `Reservation 1 ──── 1..* Billet` : Une réservation contient au moins un billet
 
 ---
 

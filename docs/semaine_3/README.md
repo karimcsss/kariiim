@@ -151,21 +151,22 @@ Description : [Résumé du cas d'utilisation]
 ## 📊 Exemple de structure
 
 ```
-Système : Gestion de bibliothèque
+Système : Gestion de musée
 
 Acteurs :
-- Lecteur (principal)
-- Bibliothécaire (principal)
+- Visiteur (principal)
+- Guide (principal)
+- Conservateur (principal)
 - Système de paiement (secondaire)
 
 Cas d'utilisation :
 - S'inscrire
 - Se connecter
-- Rechercher un livre
-- Emprunter un livre <<include>> Vérifier disponibilité
-- Retourner un livre
-- Payer une amende <<extend>> Emprunter un livre
-- Gérer le catalogue (bibliothécaire)
+- Consulter les œuvres
+- Réserver un billet <<include>> Vérifier disponibilité
+- Réserver une visite guidée
+- Gérer les expositions (conservateur)
+- Gérer les œuvres (conservateur)
 ```
 
 ---
