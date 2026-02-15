@@ -1,0 +1,82 @@
+@startuml Diagramme_Activite_Reservation
+
+title Processus de Réservation de Billet - Diagramme d'Activité
+
+start
+
+:Visiteur accède au site;
+
+if (Visiteur authentifié ?) then (oui)
+  :Afficher page de réservation;
+else (non)
+  :Proposer connexion/inscription;
+  if (Choisir action) then (connexion)
+    :S'authentifier;
+  else (inscription)
+    :Créer un compte;
+  endif
+  :Afficher page de réservation;
+endif
+
+:Sélectionner date de visite;
+
+:Système affiche créneaux disponibles;
+
+if (Créneaux disponibles ?) then (oui)
+  :Sélectionner créneau horaire;
+  :Choisir type de billet;
+  :Choisir quantité;
+  
+  :Système calcule le montant total;
+  
+  :Afficher récapitulatif;
+  
+  if (Visiteur confirme ?) then (oui)
+    :Créer réservation (statut: EN_ATTENTE);
+    
+    :Rediriger vers paiement;
+    
+    fork
+      :Traiter le paiement;
+    fork again
+      :Timer 15 minutes;
+    end fork
+    
+    if (Paiement accepté ?) then (oui)
+      :Mettre à jour statut: CONFIRMÉE;
+      :Générer QR code;
+      :Envoyer email de confirmation;
+      
+      :Afficher confirmation + QR code;
+      
+      stop
+      
+    else (refusé)
+      :Afficher message d'erreur;
+      :Proposer nouvelle tentative;
+      
+      if (Retenter ?) then (oui)
+        :Rediriger vers paiement;
+      else (non)
+        :Annuler réservation;
+        stop
+      endif
+    endif
+    
+  else (annuler)
+    :Retour à la sélection;
+  endif
+  
+else (non)
+  :Afficher message "Aucune disponibilité";
+  :Proposer autres dates;
+  
+  if (Choisir autre date ?) then (oui)
+    :Sélectionner date de visite;
+  else (non)
+    :Quitter;
+    stop
+  endif
+endif
+
+@enduml

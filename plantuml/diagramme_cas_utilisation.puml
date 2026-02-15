@@ -1,0 +1,103 @@
+@startuml Diagramme_Cas_Utilisation_Musee
+
+' Titre
+title Système de Gestion de Musée - Diagramme de Cas d'Utilisation
+
+' Définition des acteurs
+actor Visiteur as V
+actor Guide as G
+actor Conservateur as C
+actor Administrateur as A
+actor "Système de\nPaiement" as SP #lightblue
+actor "Système de\nNotification" as SN #lightblue
+
+' Boîte du système
+rectangle "Système de Gestion de Musée" {
+  
+  ' Cas d'utilisation pour Visiteur
+  usecase (S'inscrire) as UC1
+  usecase (S'authentifier) as UC2
+  usecase (Consulter les œuvres) as UC3
+  usecase (Consulter les expositions) as UC4
+  usecase (Réserver un billet) as UC5
+  usecase (Réserver une visite guidée) as UC6
+  usecase (Annuler une réservation) as UC7
+  
+  ' Cas d'utilisation pour Guide
+  usecase (Consulter son planning) as UC8
+  usecase (Gérer les groupes de visite) as UC9
+  usecase (Marquer la présence) as UC10
+  
+  ' Cas d'utilisation pour Conservateur
+  usecase (Gérer les œuvres) as UC11
+  usecase (Gérer les expositions) as UC12
+  usecase (Consulter les statistiques) as UC13
+  
+  ' Cas d'utilisation pour Administrateur
+  usecase (Gérer les utilisateurs) as UC14
+  usecase (Configurer le système) as UC15
+  
+  ' Cas d'utilisation inclus
+  usecase (Vérifier disponibilité) as UC_INC1
+  usecase (Sélectionner la date) as UC_INC2
+  usecase (Traiter le paiement) as UC_INC3
+  usecase (Envoyer notification) as UC_INC4
+}
+
+' Relations Visiteur
+V --> UC1
+V --> UC2
+V --> UC3
+V --> UC4
+V --> UC5
+V --> UC6
+V --> UC7
+
+' Relations Guide
+G --> UC2
+G --> UC8
+G --> UC9
+G --> UC10
+
+' Relations Conservateur
+C --> UC2
+C --> UC11
+C --> UC12
+C --> UC13
+
+' Relations Administrateur
+A --> UC2
+A --> UC14
+A --> UC15
+
+' Relations include
+UC5 .> UC_INC1 : <<include>>
+UC5 .> UC_INC2 : <<include>>
+UC5 .> UC_INC3 : <<include>>
+
+UC6 .> UC_INC1 : <<include>>
+UC6 .> UC_INC4 : <<include>>
+
+' Relations extend
+UC7 .> UC5 : <<extend>>
+
+' Relations avec systèmes externes
+UC_INC3 --> SP
+UC_INC4 --> SN
+
+' Héritage d'authentification
+UC2 <|-- A
+
+' Notes explicatives
+note right of UC5
+  Réservation en ligne avec
+  paiement et génération
+  de QR code
+end note
+
+note right of UC6
+  Maximum 20 personnes
+  par visite guidée
+end note
+
+@enduml
