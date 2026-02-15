@@ -1,0 +1,27 @@
+@startuml Exemple_Simple_Classes
+
+' Exemple minimaliste de diagramme de classes
+title Mon Premier Diagramme de Classes
+
+' Deux classes simples
+class Personne {
+  - nom : String
+  - age : Integer
+  + sePresenter() : void
+}
+
+class Adresse {
+  - rue : String
+  - ville : String
+}
+
+' Une relation simple
+Personne "1" -- "0..1" Adresse : habite >
+
+' Une note
+note right of Personne
+  Classe représentant
+  une personne
+end note
+
+@enduml

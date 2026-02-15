@@ -1,0 +1,24 @@
+@startuml Exemple_Simple_Cas_Utilisation
+
+' Exemple minimaliste pour débuter
+title Mon Premier Diagramme de Cas d'Utilisation
+
+' Un acteur simple
+actor Utilisateur
+
+' Quelques cas d'utilisation
+usecase (Se connecter)
+usecase (Consulter)
+usecase (Modifier)
+
+' Relations simples
+Utilisateur --> (Se connecter)
+Utilisateur --> (Consulter)
+Utilisateur --> (Modifier)
+
+' Une note
+note right of (Se connecter)
+  Nécessite un compte
+end note
+
+@enduml

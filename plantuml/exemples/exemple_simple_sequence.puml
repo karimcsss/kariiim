@@ -1,0 +1,19 @@
+@startuml Exemple_Simple_Sequence
+
+' Exemple minimaliste de diagramme de séquence
+title Mon Premier Diagramme de Séquence
+
+actor Utilisateur
+participant "Interface" as UI
+participant "Système" as SYS
+
+' Numérotation automatique
+autonumber
+
+' Quelques messages simples
+Utilisateur -> UI : cliquer()
+UI -> SYS : traiter()
+SYS --> UI : résultat
+UI --> Utilisateur : afficher()
+
+@enduml
